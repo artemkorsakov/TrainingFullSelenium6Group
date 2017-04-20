@@ -66,6 +66,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Lesson2Task1.cs" />
+    <Compile Include="Lesson2Task3.cs" />
+    <Compile Include="Pages\AdminPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

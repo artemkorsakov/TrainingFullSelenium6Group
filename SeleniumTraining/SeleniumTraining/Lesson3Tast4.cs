@@ -9,7 +9,7 @@ namespace SeleniumTraining
     public class Lesson3Tast4
     {
         [Test]
-        public void FirstTest()
+        public void CheckAnyBrowser()
         {
             BrowserKind[] browsers = { BrowserKind.Firefox, BrowserKind.Chrome, BrowserKind.IE };
             foreach (var browser in browsers)

@@ -20,7 +20,7 @@ namespace SeleniumTraining
         }
 
         [Test]
-        public void FirstTest()
+        public void CheckRepository()
         {
             _driver.Url = "http://software-testing.ru/forum/";
             _driver.FindElement(By.Id("main_search")).SendKeys("Проверка поиска");

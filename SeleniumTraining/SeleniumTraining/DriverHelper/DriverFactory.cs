@@ -12,6 +12,8 @@ namespace SeleniumTraining.DriverHelper
     /// </summary>
     internal class DriverFactory
     {
+        internal const int TimeOutSeconds = 5;
+
         /// <summary>
         /// Создание драйвера
         /// </summary>
@@ -44,7 +46,7 @@ namespace SeleniumTraining.DriverHelper
                     break;
             }
             driver.Manage().Window.Maximize();
-            driver.Manage().Timeouts().ImplicitWait = new TimeSpan(0, 0, 30);
+            driver.Manage().Timeouts().ImplicitWait = new TimeSpan(0, 0, TimeOutSeconds);
 
             return driver;
         }

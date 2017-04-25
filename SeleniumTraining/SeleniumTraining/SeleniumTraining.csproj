@@ -76,6 +76,7 @@
     <Compile Include="Lesson4Task7.cs" />
     <Compile Include="Lesson4Task8.cs" />
     <Compile Include="Pages\AdminPage.cs" />
+    <Compile Include="Pages\MainPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

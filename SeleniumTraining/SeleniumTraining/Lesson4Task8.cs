@@ -23,11 +23,17 @@ namespace SeleniumTraining
         /// или что-нибудь другое. Сценарий должен проверять, что у каждого товара имеется ровно один стикер.
         /// </summary>
         [Test]
-        public void CheckFirefoxNightly()
+        public void CheckStickers()
         {
-            _driver.Url = "http://localhost:8080/litecart/admin/";
-            AdminPage adminPage = new AdminPage(_driver);
-            adminPage.Login("admin", "admin");
+            MainPage mainPage = new MainPage(_driver);
+            mainPage.Open();
+
+            var categories = mainPage.GetCategoriesName();
+            foreach (var category in categories)
+            {
+                mainPage.ClickCategory(category);
+                mainPage.AssertStickers();
+            }
         }
 
         [TearDown]

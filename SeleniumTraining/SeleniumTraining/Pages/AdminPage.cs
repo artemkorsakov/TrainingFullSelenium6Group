@@ -19,6 +19,14 @@ namespace SeleniumTraining.Pages
         }
 
         /// <summary>
+        /// Открытие страницы
+        /// </summary>
+        internal void Open()
+        {
+            _driver.Url = "http://localhost:8080/litecart/admin/";
+        }
+
+        /// <summary>
         /// Вход на панель администратора под заданными логином и паролем
         /// </summary>
         internal void Login(string login, string password)

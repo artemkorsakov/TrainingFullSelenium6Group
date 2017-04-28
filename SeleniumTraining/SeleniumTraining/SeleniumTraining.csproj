@@ -68,6 +68,8 @@
     <Compile Include="DriverHelper\BrowserKind.cs" />
     <Compile Include="DriverHelper\DriverFactory.cs" />
     <Compile Include="DriverHelper\Elements.cs" />
+    <Compile Include="Entities\Product.cs" />
+    <Compile Include="Entities\Rgba.cs" />
     <Compile Include="Lesson2Task1.cs" />
     <Compile Include="Lesson2Task3.cs" />
     <Compile Include="Lesson3Tast4.cs" />
@@ -75,6 +77,7 @@
     <Compile Include="Lesson3Tast6.cs" />
     <Compile Include="Lesson4Task7.cs" />
     <Compile Include="Lesson4Task8.cs" />
+    <Compile Include="Lesson5Task10.cs" />
     <Compile Include="Lesson5Task9.cs" />
     <Compile Include="Pages\AdminPage.cs" />
     <Compile Include="Pages\CountriesPage.cs" />

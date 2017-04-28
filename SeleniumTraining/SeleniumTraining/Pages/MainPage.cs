@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Globalization;
+using System.Linq;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using SeleniumTraining.Entities;
 
 namespace SeleniumTraining.Pages
 {
@@ -9,11 +11,11 @@ namespace SeleniumTraining.Pages
     /// </summary>
     internal class MainPage
     {
-        private readonly IWebDriver _driver;
+        protected readonly IWebDriver Driver;
 
         internal MainPage(IWebDriver driver)
         {
-            _driver = driver;
+            Driver = driver;
         }
 
         /// <summary>
@@ -21,7 +23,7 @@ namespace SeleniumTraining.Pages
         /// </summary>
         internal void Open()
         {
-            _driver.Url = "http://localhost:8080/litecart/";
+            Driver.Url = "http://localhost:8080/litecart/";
         }
 
         /// <summary>
@@ -29,7 +31,7 @@ namespace SeleniumTraining.Pages
         /// </summary>
         internal string[] GetCategoriesName()
         {
-            var menus = _driver.FindElements(By.CssSelector("#box-category-tree > ul a"));
+            var menus = Driver.FindElements(By.CssSelector("#box-category-tree > ul a"));
             return menus.Select(menu => menu.Text).ToArray();
         }
 
@@ -38,9 +40,9 @@ namespace SeleniumTraining.Pages
         /// </summary>
         internal void ClickCategory(string name)
         {
-            _driver.FindElement(By.XPath($"//div[@id='box-category-tree']//a[contains(., '{name}')]")).Click();
+            Driver.FindElement(By.XPath($"//div[@id='box-category-tree']//a[contains(., '{name}')]")).Click();
             // Ждем, когда пункт меню станет выбранным
-            _driver.FindElement(By.XPath($"//div[@id='box-category-tree']//li[contains(@class, 'active')][a[contains(., '{name}')]]"));
+            Driver.FindElement(By.XPath($"//div[@id='box-category-tree']//li[contains(@class, 'active')][a[contains(., '{name}')]]"));
         }
 
         /// <summary>
@@ -48,12 +50,101 @@ namespace SeleniumTraining.Pages
         /// </summary>
         internal void AssertStickers()
         {
-            var products = _driver.FindElements(By.CssSelector(".products .product"));
+            var products = Driver.FindElements(By.CssSelector(".products .product"));
             foreach (var product in products)
             {
                 var countStickers = product.FindElements(By.CssSelector(".sticker")).Count;
                 Assert.True(countStickers == 1);
             }
+        }
+
+        /// <summary>
+        /// Получить первый продукт на главной странице и проверить его корректность
+        /// </summary>
+        internal Product GetFirstProductAndCheckIt()
+        {
+            var product = Driver.FindElement(By.CssSelector("#box-campaigns .product"));
+            string name = product.FindElement(By.CssSelector(".name")).Text;
+            string manufacturer = product.FindElement(By.CssSelector(".manufacturer")).Text;
+
+            var regularPrice = product.FindElement(By.CssSelector(".regular-price"));
+            string textRegularPrice = regularPrice.Text;
+            var campaignPrice = product.FindElement(By.CssSelector(".campaign-price"));
+            string textCampaignPrice = campaignPrice.Text;
+
+            AssertProduct(regularPrice, campaignPrice);
+
+            return new Product(name, manufacturer, textRegularPrice, textCampaignPrice);
+        }
+
+        /// <summary>
+        /// Кликнуть на первый продукт на главной странице
+        /// </summary>
+        internal void ClickFirstProduct()
+        {
+            Driver.FindElement(By.CssSelector("#box-campaigns .product > a")).Click();
+            Driver.FindElement(By.CssSelector("#box-product"));
+        }
+
+        /// <summary>
+        /// Получить первый продукт на главной странице и проверить его корректность
+        /// </summary>
+        internal Product GetSelectedProductAndCheckIt()
+        {
+            var product = Driver.FindElement(By.CssSelector("#box-product"));
+            string name = product.FindElement(By.CssSelector(".title")).Text;
+            string manufacturer = product.FindElement(By.CssSelector(".manufacturer img")).GetAttribute("title");
+
+            var regularPrice = product.FindElement(By.CssSelector(".regular-price"));
+            string textRegularPrice = regularPrice.Text;
+            var campaignPrice = product.FindElement(By.CssSelector(".campaign-price"));
+            string textCampaignPrice = campaignPrice.Text;
+
+            AssertProduct(regularPrice, campaignPrice);
+
+            return new Product(name, manufacturer, textRegularPrice, textCampaignPrice);
+        }
+
+        /// <summary>
+        /// Проверить корректность первого продукта:
+        /// в) обычная цена зачёркнутая и серая(можно считать, что "серый" цвет это такой, у которого в RGBa представлении одинаковые значения для каналов R, G и B)
+        /// г) акционная жирная и красная(можно считать, что "красный" цвет это такой, у которого в RGBa представлении каналы G и B имеют нулевые значения)
+        /// (цвета надо проверить на каждой странице независимо, при этом цвета на разных страницах могут не совпадать)
+        /// г) акционная цена крупнее, чем обычная(это тоже надо проверить на каждой странице независимо)
+        /// </summary>
+        protected void AssertProduct(IWebElement regularPrice, IWebElement campaignPrice)
+        {
+            // обычная цена зачёркнутая
+            string styleRegularPrice = regularPrice.GetCssValue("text-decoration-line");
+
+            if (Driver.GetType().Name == "InternetExplorerDriver")
+            {
+                // В моем браузере IE не определяется стиль "text-decoration-line" (((
+                Assert.True(regularPrice.TagName == "s" || regularPrice.TagName == "del");
+            }
+            else
+            {
+                Assert.True(styleRegularPrice == "line-through");
+            }
+
+            // обычная цена серая(можно считать, что "серый" цвет это такой, у которого в RGBa представлении одинаковые значения для каналов R, G и B)
+            string colorRegularPrice = regularPrice.GetCssValue("color");
+            Rgba rgbaRegularPrice = new Rgba(colorRegularPrice);
+            Assert.True(rgbaRegularPrice.IsGrey());
+
+            // акционная жирная
+            string styleCampaignPrice = campaignPrice.TagName;
+            Assert.True(styleCampaignPrice == "strong");
+
+            // акционная красная(можно считать, что "красный" цвет это такой, у которого в RGBa представлении каналы G и B имеют нулевые значения)
+            string colorCampaignPrice = campaignPrice.GetCssValue("color");
+            Rgba rgbaCampaignPrice = new Rgba(colorCampaignPrice);
+            Assert.True(rgbaCampaignPrice.IsRed());
+
+            // акционная цена крупнее, чем обычная
+            string sizeRegularPrice = regularPrice.GetCssValue("font-size").Replace("px", "");
+            string sizeCampaignPrice = campaignPrice.GetCssValue("font-size").Replace("px", "");
+            Assert.True(double.Parse(sizeCampaignPrice, CultureInfo.InvariantCulture) > double.Parse(sizeRegularPrice, CultureInfo.InvariantCulture));
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using SeleniumTraining.DriverHelper;
 
 namespace SeleniumTraining.Pages
 {

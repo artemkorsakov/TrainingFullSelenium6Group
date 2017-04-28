@@ -12,7 +12,7 @@ namespace SeleniumTraining.DriverHelper
     /// </summary>
     internal class DriverFactory
     {
-        internal const int TimeOutSeconds = 5;
+        internal const int TimeOutSeconds = 10;
 
         /// <summary>
         /// Создание драйвера

@@ -11,11 +11,11 @@ namespace SeleniumTraining.Pages
     /// </summary>
     internal class AdminPage
     {
-        private readonly IWebDriver _driver;
+        protected readonly IWebDriver Driver;
 
         internal AdminPage(IWebDriver driver)
         {
-            _driver = driver;
+            Driver = driver;
         }
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace SeleniumTraining.Pages
         /// </summary>
         internal void Open()
         {
-            _driver.Url = "http://localhost:8080/litecart/admin/";
+            Driver.Url = "http://localhost:8080/litecart/admin/";
         }
 
         /// <summary>
@@ -31,9 +31,10 @@ namespace SeleniumTraining.Pages
         /// </summary>
         internal void Login(string login, string password)
         {
-            _driver.FindElement(By.Name("username")).SendKeys(login);
-            _driver.FindElement(By.Name("password")).SendKeys(password);
-            _driver.FindElement(By.XPath("//button[.='Login']")).Click();
+            Driver.FindElement(By.Name("username")).SendKeys(login);
+            Driver.FindElement(By.Name("password")).SendKeys(password);
+            Driver.FindElement(By.XPath("//button[.='Login']")).Click();
+            WaitLoad();
         }
 
         /// <summary>
@@ -41,7 +42,7 @@ namespace SeleniumTraining.Pages
         /// </summary>
         internal string[] GetMenusName()
         {
-            var menus = _driver.FindElements(By.CssSelector("ul#box-apps-menu > li .name"));
+            var menus = Driver.FindElements(By.CssSelector("ul#box-apps-menu > li .name"));
             return menus.Select(menu => menu.Text).ToArray();
         }
 
@@ -50,9 +51,9 @@ namespace SeleniumTraining.Pages
         /// </summary>
         internal void ClickMenu(string name)
         {
-            _driver.FindElement(By.XPath($"//a[span[.='{name}']]")).Click();
+            Driver.FindElement(By.XPath($"//a[span[.='{name}']]")).Click();
             // Ждем, когда пункт меню станет выбранным
-            _driver.FindElement(By.XPath($"//li[a[span[.='{name}']]][@class='selected']"));
+            Driver.FindElement(By.XPath($"//li[a[span[.='{name}']]][@class='selected']"));
         }
 
         /// <summary>
@@ -60,9 +61,9 @@ namespace SeleniumTraining.Pages
         /// </summary>
         internal string[] GetSubmenusName(string name)
         {
-            _driver.Manage().Timeouts().ImplicitWait = new TimeSpan(0, 0, 0);
-            var menus = _driver.FindElements(By.XPath($"//li[a[span[.='{name}']]]//li"));
-            _driver.Manage().Timeouts().ImplicitWait = new TimeSpan(0, 0, DriverFactory.TimeOutSeconds);
+            Driver.Manage().Timeouts().ImplicitWait = new TimeSpan(0, 0, 0);
+            var menus = Driver.FindElements(By.XPath($"//li[a[span[.='{name}']]]//li"));
+            Driver.Manage().Timeouts().ImplicitWait = new TimeSpan(0, 0, DriverFactory.TimeOutSeconds);
             return menus.Select(menu => menu.Text).ToArray();
         }
 
@@ -71,9 +72,9 @@ namespace SeleniumTraining.Pages
         /// </summary>
         internal void ClickSubmenu(string name, string subname)
         {
-            _driver.FindElement(By.XPath($"//ul[@class='docs']//a[span[.='{subname}']]")).Click();
+            Driver.FindElement(By.XPath($"//ul[@class='docs']//a[span[.='{subname}']]")).Click();
             // Ждем, когда пункт меню станет выбранным
-            _driver.FindElement(By.XPath($"//ul[@class='docs']/li[a[span[.='{subname}']]][@class='selected']"));
+            Driver.FindElement(By.XPath($"//ul[@class='docs']/li[a[span[.='{subname}']]][@class='selected']"));
         }
 
         /// <summary>
@@ -81,7 +82,7 @@ namespace SeleniumTraining.Pages
         /// </summary>
         internal void AssertPresentTitle()
         {
-            Assert.True(Elements.AreElementsPresent(_driver, By.CssSelector("#main > h1")));
+            Assert.True(Elements.AreElementsPresent(Driver, By.CssSelector("#main > h1")));
         }
 
         /// <summary>
@@ -89,7 +90,16 @@ namespace SeleniumTraining.Pages
         /// </summary>
         internal void Logout()
         {
-            _driver.FindElement(By.XPath("//a[@title='Logout']")).Click();
+            Driver.FindElement(By.XPath("//a[@title='Logout']")).Click();
+        }
+
+        /// <summary>
+        /// Ожидание загрузки страницы:
+        /// Ждем, когда осуществится вход в систему и появится кнопка логаута
+        /// </summary>
+        internal void WaitLoad()
+        {
+            Driver.FindElement(By.XPath("//a[@title='Logout']"));
         }
     }
 }

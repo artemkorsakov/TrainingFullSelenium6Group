@@ -10,13 +10,11 @@ namespace SeleniumTraining
     public class Lesson2Task1
     {
         private IWebDriver _driver;
-        private WebDriverWait _wait;
 
         [SetUp]
         public void Start()
         {
             _driver = new ChromeDriver();
-            _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
         }
 
         [Test]

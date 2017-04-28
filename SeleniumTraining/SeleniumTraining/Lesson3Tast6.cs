@@ -19,8 +19,8 @@ namespace SeleniumTraining
         [Test]
         public void CheckFirefoxNightly()
         {
-            _driver.Url = "http://localhost:8080/litecart/admin/";
             AdminPage adminPage = new AdminPage(_driver);
+            adminPage.Open();
             adminPage.Login("admin", "admin");
             adminPage.Logout();
         }

@@ -15,8 +15,8 @@ namespace SeleniumTraining
             foreach (var browser in browsers)
             {
                 IWebDriver driver = DriverFactory.CreateWebDriver(browser);
-                driver.Url = "http://localhost:8080/litecart/admin/";
                 AdminPage adminPage = new AdminPage(driver);
+                adminPage.Open();
                 adminPage.Login("admin", "admin");
                 adminPage.Logout();
                 driver.Quit();

@@ -6,23 +6,24 @@ using SeleniumTraining.Pages;
 namespace SeleniumTraining
 {
     [TestFixture]
-    public class Lesson3Tast5
+    public class Lesson5Task10
     {
         private IWebDriver _driver;
 
         [SetUp]
         public void Start()
         {
-            _driver = DriverFactory.CreateWebDriver(BrowserKind.VeryOldFirefox);
+            _driver = DriverFactory.CreateWebDriver(BrowserKind.Chrome);
         }
 
+        /// <summary>
+        /// Сценарий:
+        /// </summary>
         [Test]
-        public void CheckOldFirefox()
+        public void CheckStickers()
         {
-            AdminPage adminPage = new AdminPage(_driver);
-            adminPage.Open();
-            adminPage.Login("admin", "admin");
-            adminPage.Logout();
+            MainPage mainPage = new MainPage(_driver);
+            mainPage.Open();
         }
 
         [TearDown]

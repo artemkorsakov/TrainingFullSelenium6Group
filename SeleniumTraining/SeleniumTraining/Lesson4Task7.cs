@@ -36,7 +36,7 @@ namespace SeleniumTraining
                 var submenus = adminPage.GetSubmenusName(menu);
                 foreach (var submenu in submenus)
                 {
-                    adminPage.ClickSubmenu(menu, submenu);
+                    adminPage.ClickSubmenu(submenu);
                     adminPage.AssertPresentTitle();
                 }
             }

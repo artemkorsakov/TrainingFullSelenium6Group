@@ -70,6 +70,7 @@
     <Compile Include="DriverHelper\Elements.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\Rgba.cs" />
+    <Compile Include="Entities\User.cs" />
     <Compile Include="Lesson2Task1.cs" />
     <Compile Include="Lesson2Task3.cs" />
     <Compile Include="Lesson3Tast4.cs" />
@@ -79,8 +80,10 @@
     <Compile Include="Lesson4Task8.cs" />
     <Compile Include="Lesson5Task10.cs" />
     <Compile Include="Lesson5Task9.cs" />
+    <Compile Include="Lesson6Task11.cs" />
     <Compile Include="Pages\AdminPage.cs" />
     <Compile Include="Pages\CountriesPage.cs" />
+    <Compile Include="Pages\CreateAccountPage.cs" />
     <Compile Include="Pages\EditCountryPage.cs" />
     <Compile Include="Pages\EditGeoZonePage.cs" />
     <Compile Include="Pages\GeoZonesPage.cs" />

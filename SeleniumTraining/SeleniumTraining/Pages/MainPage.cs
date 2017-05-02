@@ -1,7 +1,9 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Linq;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using SeleniumTraining.Entities;
 
 namespace SeleniumTraining.Pages
@@ -145,6 +147,42 @@ namespace SeleniumTraining.Pages
             string sizeRegularPrice = regularPrice.GetCssValue("font-size").Replace("px", "");
             string sizeCampaignPrice = campaignPrice.GetCssValue("font-size").Replace("px", "");
             Assert.True(double.Parse(sizeCampaignPrice, CultureInfo.InvariantCulture) > double.Parse(sizeRegularPrice, CultureInfo.InvariantCulture));
+        }
+
+        /// <summary>
+        /// Кликнуть на регистрацию нового пользователя
+        /// </summary>
+        internal void ClickRegistration()
+        {
+            Driver.FindElement(By.XPath("//a[.='New customers click here']")).Click();
+            // Ждем, когда откроется страница регистрации
+            Driver.FindElement(By.CssSelector("#box-create-account"));
+        }
+
+        /// <summary>
+        /// Залогироваться под пользователем
+        /// </summary>
+        internal void Login(string email, string password)
+        {
+            Driver.FindElement(By.CssSelector("[name=login_form] [name=email]")).SendKeys(email);
+            Driver.FindElement(By.CssSelector("[name=login_form] [name=password]")).SendKeys(password);
+            Driver.FindElement(By.CssSelector("[name=login_form] button[name=login]")).Click();
+
+            // Надо дождаться, что сохранение прошло успешно
+            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementExists(By.CssSelector("div#box-account")));
+        }
+
+        /// <summary>
+        /// Разлогироваться
+        /// </summary>
+        internal void Logout()
+        {
+            Driver.FindElement(By.XPath("//div[@id='box-account']//a[.='Logout']")).Click();
+
+            // Надо дождаться разлогирования
+            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementExists(By.CssSelector("form[name=login_form]")));
         }
     }
 }

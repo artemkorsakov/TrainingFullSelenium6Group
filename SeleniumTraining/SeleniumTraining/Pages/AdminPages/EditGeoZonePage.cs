@@ -1,14 +1,14 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
 
-namespace SeleniumTraining.Pages
+namespace SeleniumTraining.Pages.AdminPages
 {
     /// <summary>
-    /// Страница редактирования компании
+    /// Страница редактирования геозоны
     /// </summary>
-    internal class EditCountryPage : AdminPage
+    internal class EditGeoZonePage : AdminPage
     {
-        internal EditCountryPage(IWebDriver driver) : base(driver)
+        internal EditGeoZonePage(IWebDriver driver) : base(driver)
         {
             WaitLoad();
         }
@@ -18,11 +18,11 @@ namespace SeleniumTraining.Pages
         /// </summary>
         internal void AssertAlphabetZones()
         {
-            var zonesName = Driver.FindElements(By.XPath("//form[@name='country_form']//input[contains(@name, '[name]')]"));
+            var zonesName = Driver.FindElements(By.XPath("//form[@name='form_geo_zone']//td[input[contains(@name, '[zone_code]')]]"));
             string previousName = null;
             foreach (var zone in zonesName)
             {
-                string currentName = zone.GetAttribute("value");
+                string currentName = zone.Text;
                 if (previousName != null)
                 {
                     Assert.True(currentName.CompareTo(previousName) > 0);
@@ -38,7 +38,7 @@ namespace SeleniumTraining.Pages
         /// </summary>
         internal new void WaitLoad()
         {
-            Driver.FindElement(By.CssSelector("form[name=country_form]"));
+            Driver.FindElement(By.CssSelector("[name=form_geo_zone]"));
         }
     }
 }

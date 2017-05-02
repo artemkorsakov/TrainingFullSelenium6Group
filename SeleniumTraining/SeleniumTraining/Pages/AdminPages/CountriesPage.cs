@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 
-namespace SeleniumTraining.Pages
+namespace SeleniumTraining.Pages.AdminPages
 {
     /// <summary>
     /// Страница стран

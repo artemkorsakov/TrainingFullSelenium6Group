@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using OpenQA.Selenium;
 
-namespace SeleniumTraining.Pages
+namespace SeleniumTraining.Pages.AdminPages
 {
     /// <summary>
     /// Страница гео зон

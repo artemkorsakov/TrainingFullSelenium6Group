@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using SeleniumTraining.DriverHelper;
 using SeleniumTraining.Pages;
+using SeleniumTraining.Pages.AdminPages;
 
 namespace SeleniumTraining
 {

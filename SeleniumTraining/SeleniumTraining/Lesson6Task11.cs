@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using SeleniumTraining.DriverHelper;
 using SeleniumTraining.Entities;
 using SeleniumTraining.Pages;
+using SeleniumTraining.Pages.AdminPages;
 
 namespace SeleniumTraining
 {
@@ -28,11 +29,13 @@ namespace SeleniumTraining
             adminPage.Open();
             adminPage.Login("admin", "admin");
             adminPage.ClickMenu("Settings");
-            adminPage.ClickSubmenu("Security");
-            adminPage.EditKey("CAPTCHA");
-            adminPage.SetBooleanKey("CAPTCHA", false);
-            adminPage.SaveKey("CAPTCHA");
-            adminPage.Logout();
+
+            SettingsPage settingsPage = new SettingsPage(_driver);
+            settingsPage.ClickSubmenu("Security");
+            settingsPage.EditKey("CAPTCHA");
+            settingsPage.SetBooleanKey("CAPTCHA", false);
+            settingsPage.SaveKey("CAPTCHA");
+            settingsPage.Logout();
 
             MainPage mainPage = new MainPage(_driver);
             mainPage.Open();

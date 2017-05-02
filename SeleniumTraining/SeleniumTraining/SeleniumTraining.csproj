@@ -81,13 +81,15 @@
     <Compile Include="Lesson5Task10.cs" />
     <Compile Include="Lesson5Task9.cs" />
     <Compile Include="Lesson6Task11.cs" />
-    <Compile Include="Pages\AdminPage.cs" />
-    <Compile Include="Pages\CountriesPage.cs" />
+    <Compile Include="Lesson6Task12.cs" />
+    <Compile Include="Pages\AdminPages\AdminPage.cs" />
+    <Compile Include="Pages\AdminPages\CountriesPage.cs" />
     <Compile Include="Pages\CreateAccountPage.cs" />
-    <Compile Include="Pages\EditCountryPage.cs" />
-    <Compile Include="Pages\EditGeoZonePage.cs" />
-    <Compile Include="Pages\GeoZonesPage.cs" />
+    <Compile Include="Pages\AdminPages\EditCountryPage.cs" />
+    <Compile Include="Pages\AdminPages\EditGeoZonePage.cs" />
+    <Compile Include="Pages\AdminPages\GeoZonesPage.cs" />
     <Compile Include="Pages\MainPage.cs" />
+    <Compile Include="Pages\AdminPages\SettingsPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -99,6 +101,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

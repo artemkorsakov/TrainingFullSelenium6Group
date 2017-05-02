@@ -21,7 +21,7 @@ namespace SeleniumTraining
         /// Cценарий для регистрации нового пользователя в учебном приложении litecart
         /// </summary>
         [Test]
-        public void CheckLoginAdmin()
+        public void CheckRegistration()
         {
             // Отключаем капчу в админке на вкладке Settings -> Security.
             AdminPage adminPage = new AdminPage(_driver);

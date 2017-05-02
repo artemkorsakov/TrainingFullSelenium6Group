@@ -32,9 +32,9 @@ namespace SeleniumTraining
                 _driver = DriverFactory.CreateWebDriver(browser);
                 MainPage mainPage = new MainPage(_driver);
                 mainPage.Open();
-                Product productMainPage = mainPage.GetFirstProductAndCheckIt();
+                SimpleProduct productMainPage = mainPage.GetFirstProductAndCheckIt();
                 mainPage.ClickFirstProduct();
-                Product product = mainPage.GetSelectedProductAndCheckIt();
+                SimpleProduct product = mainPage.GetSelectedProductAndCheckIt();
                 Assert.True(productMainPage.Equals(product));
                 _driver.Quit();
                 _driver = null;

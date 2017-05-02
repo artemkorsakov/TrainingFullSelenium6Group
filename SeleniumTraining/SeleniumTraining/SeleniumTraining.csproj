@@ -69,6 +69,7 @@
     <Compile Include="DriverHelper\DriverFactory.cs" />
     <Compile Include="DriverHelper\Elements.cs" />
     <Compile Include="Entities\Product.cs" />
+    <Compile Include="Entities\SimpleProduct.cs" />
     <Compile Include="Entities\Rgba.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Lesson2Task1.cs" />
@@ -82,7 +83,9 @@
     <Compile Include="Lesson5Task9.cs" />
     <Compile Include="Lesson6Task11.cs" />
     <Compile Include="Lesson6Task12.cs" />
+    <Compile Include="Pages\AdminPages\AddNewProductPage.cs" />
     <Compile Include="Pages\AdminPages\AdminPage.cs" />
+    <Compile Include="Pages\AdminPages\CatalogPage.cs" />
     <Compile Include="Pages\AdminPages\CountriesPage.cs" />
     <Compile Include="Pages\CreateAccountPage.cs" />
     <Compile Include="Pages\AdminPages\EditCountryPage.cs" />
@@ -101,7 +104,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Images\" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

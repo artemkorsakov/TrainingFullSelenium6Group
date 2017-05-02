@@ -63,7 +63,7 @@ namespace SeleniumTraining.Pages
         /// <summary>
         /// Получить первый продукт на главной странице и проверить его корректность
         /// </summary>
-        internal Product GetFirstProductAndCheckIt()
+        internal SimpleProduct GetFirstProductAndCheckIt()
         {
             var product = Driver.FindElement(By.CssSelector("#box-campaigns .product"));
             string name = product.FindElement(By.CssSelector(".name")).Text;
@@ -76,7 +76,7 @@ namespace SeleniumTraining.Pages
 
             AssertProduct(regularPrice, campaignPrice);
 
-            return new Product(name, manufacturer, textRegularPrice, textCampaignPrice);
+            return new SimpleProduct(name, manufacturer, textRegularPrice, textCampaignPrice);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace SeleniumTraining.Pages
         /// <summary>
         /// Получить первый продукт на главной странице и проверить его корректность
         /// </summary>
-        internal Product GetSelectedProductAndCheckIt()
+        internal SimpleProduct GetSelectedProductAndCheckIt()
         {
             var product = Driver.FindElement(By.CssSelector("#box-product"));
             string name = product.FindElement(By.CssSelector(".title")).Text;
@@ -104,7 +104,7 @@ namespace SeleniumTraining.Pages
 
             AssertProduct(regularPrice, campaignPrice);
 
-            return new Product(name, manufacturer, textRegularPrice, textCampaignPrice);
+            return new SimpleProduct(name, manufacturer, textRegularPrice, textCampaignPrice);
         }
 
         /// <summary>

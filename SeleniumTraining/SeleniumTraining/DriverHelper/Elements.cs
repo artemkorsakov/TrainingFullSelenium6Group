@@ -20,7 +20,7 @@ namespace SeleniumTraining.DriverHelper
                 driver.Manage().Timeouts().ImplicitWait = new TimeSpan(0, 0, DriverFactory.TimeOutSeconds);
                 return true;
             }
-            catch (NoSuchElementException ex)
+            catch (NoSuchElementException)
             {
                 driver.Manage().Timeouts().ImplicitWait = new TimeSpan(0, 0, DriverFactory.TimeOutSeconds);
                 return false;

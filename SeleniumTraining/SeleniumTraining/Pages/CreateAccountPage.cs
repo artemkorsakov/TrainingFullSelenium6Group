@@ -1,6 +1,7 @@
 ﻿using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using SeleniumTraining.DriverHelper;
 using SeleniumTraining.Entities;
 
 namespace SeleniumTraining.Pages
@@ -70,7 +71,7 @@ namespace SeleniumTraining.Pages
             _driver.FindElement(By.CssSelector("button[name=create_account]")).Click();
 
             // Надо дождаться, что сохранение прошло успешно
-            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(DriverFactory.TimeOutSeconds));
             wait.Until(ExpectedConditions.ElementExists(By.CssSelector("div#box-account")));
         }
     }

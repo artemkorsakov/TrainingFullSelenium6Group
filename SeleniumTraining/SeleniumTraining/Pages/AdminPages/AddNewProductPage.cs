@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using SeleniumTraining.DriverHelper;
 using SeleniumTraining.Entities;
 
 namespace SeleniumTraining.Pages.AdminPages
@@ -25,7 +26,7 @@ namespace SeleniumTraining.Pages.AdminPages
             Driver.FindElement(By.XPath($"//form[@name='product_form']//a[.='{menu}']")).Click();
 
             // Надо дождаться, когда пункт меню станет активным
-            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(DriverFactory.TimeOutSeconds));
             wait.Until(
                 ExpectedConditions.ElementExists(
                     By.XPath($"//form[@name='product_form']//li[@class='active']/a[.='{menu}']")));
@@ -40,7 +41,7 @@ namespace SeleniumTraining.Pages.AdminPages
             string status = product.Status ? "Enabled" : "Disabled";
             string locator = $"//form[@name='product_form']//label[input[@name='status']][normalize-space(.)='{status}']";
             Driver.FindElement(By.XPath(locator)).Click();
-            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(DriverFactory.TimeOutSeconds));
             wait.Until(ExpectedConditions.ElementExists(By.XPath($"{locator}[contains(@class, 'active')]")));
 
             // Code Name SKU GTIN TARIC

@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using SeleniumTraining.Pages;
 using SeleniumTraining.Pages.AdminPages;
 
 namespace SeleniumTraining

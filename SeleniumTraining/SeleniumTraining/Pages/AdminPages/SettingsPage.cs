@@ -1,6 +1,7 @@
 ﻿using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using SeleniumTraining.DriverHelper;
 
 namespace SeleniumTraining.Pages.AdminPages
 {
@@ -41,7 +42,7 @@ namespace SeleniumTraining.Pages.AdminPages
             Driver.FindElement(By.XPath($"//tr[td[starts-with((.), '{key}')]]//button[@value='Save']")).Click();
 
             // Надо дождаться, что сохранение прошло успешно
-            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(DriverFactory.TimeOutSeconds));
             wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("div#notices > div.alert-success")));
         }
 

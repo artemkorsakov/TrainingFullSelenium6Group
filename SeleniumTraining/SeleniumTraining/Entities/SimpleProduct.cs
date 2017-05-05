@@ -10,6 +10,14 @@
         internal string RegularPrice { get; }
         internal string CampaignPrice { get; }
 
+        internal SimpleProduct(string name, string manufacturer)
+        {
+            Name = name;
+            Manufacturer = manufacturer;
+            RegularPrice = "unknown";
+            CampaignPrice = "unknown";
+        }
+
         internal SimpleProduct(string name, string manufacturer, string regularPrice, string campaignPrice)
         {
             Name = name;

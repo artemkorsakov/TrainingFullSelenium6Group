@@ -4,6 +4,7 @@ using System.Linq;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using SeleniumTraining.DriverHelper;
 using SeleniumTraining.Entities;
 
 namespace SeleniumTraining.Pages
@@ -89,6 +90,75 @@ namespace SeleniumTraining.Pages
         }
 
         /// <summary>
+        /// Кликнуть на заданный продукт
+        /// </summary>
+        internal void ClickProduct(SimpleProduct product)
+        {
+            Driver.FindElement(By.CssSelector($"#box-category .product > a[title='{product.Name}']")).Click();
+            Driver.FindElement(By.CssSelector("#box-product"));
+        }
+
+        /// <summary>
+        /// Выбрать желаемый размер продукта.
+        /// Если размер выбрать нельзя, то придётся довольствоваться размером по умолчанию
+        /// Выбрать количество продукта
+        /// Добавить в корзину
+        /// </summary>
+        internal void AddToCart(int quantity, string size = null)
+        {
+            if (size != null)
+            {
+                SelectSize(size);
+            }
+            SelectQuantity(quantity);
+
+            var currentQuantity = Driver.FindElement(By.CssSelector(".quantity")).Text;
+            Driver.FindElement(By.CssSelector("[name=buy_now_form] [name=add_cart_product]")).Click();
+            int futureQuantity = int.Parse(currentQuantity) + quantity;
+            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(DriverFactory.TimeOutSeconds));
+            wait.Until(ExpectedConditions.ElementExists(By.XPath($"//span[@class='quantity'][.='{futureQuantity}']")));
+        }
+
+        /// <summary>
+        /// Выбрать желаемый размер продукта.
+        /// Если размер выбрать нельзя, то придётся довольствоваться размером по умолчанию
+        /// </summary>
+        internal void SelectSize(string size)
+        {
+            new SelectElement(Driver.FindElement(By.CssSelector("[name=buy_now_form] select"))).SelectByValue(size);
+        }
+
+        /// <summary>
+        /// Выбрать количество продукта
+        /// </summary>
+        internal void SelectQuantity(int quantity)
+        {
+            var el = Driver.FindElement(By.CssSelector("[name=buy_now_form] [name=quantity]"));
+            el.Clear();
+            el.SendKeys(quantity.ToString());
+        }
+
+        /// <summary>
+        /// Закрыть попап продукта
+        /// </summary>
+        internal void CloseProductPopup()
+        {
+            var closeButton = Driver.FindElement(By.CssSelector("button.featherlight-close"));
+            closeButton.Click();
+            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(DriverFactory.TimeOutSeconds));
+            wait.Until(ExpectedConditions.StalenessOf(closeButton));
+        }
+
+        /// <summary>
+        /// Открыть корзину
+        /// </summary>
+        internal void OpenCart()
+        {
+            Driver.FindElement(By.CssSelector("#cart > a")).Click();
+            new ShoppingCartPage(Driver).WaitLoad();
+        }
+
+        /// <summary>
         /// Получить первый продукт на главной странице и проверить его корректность
         /// </summary>
         internal SimpleProduct GetSelectedProductAndCheckIt()
@@ -169,7 +239,7 @@ namespace SeleniumTraining.Pages
             Driver.FindElement(By.CssSelector("[name=login_form] button[name=login]")).Click();
 
             // Надо дождаться, что сохранение прошло успешно
-            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(DriverFactory.TimeOutSeconds));
             wait.Until(ExpectedConditions.ElementExists(By.CssSelector("div#box-account")));
         }
 
@@ -181,7 +251,7 @@ namespace SeleniumTraining.Pages
             Driver.FindElement(By.XPath("//div[@id='box-account']//a[.='Logout']")).Click();
 
             // Надо дождаться разлогирования
-            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(DriverFactory.TimeOutSeconds));
             wait.Until(ExpectedConditions.ElementExists(By.CssSelector("form[name=login_form]")));
         }
     }

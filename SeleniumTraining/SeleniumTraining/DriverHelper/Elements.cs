@@ -35,7 +35,10 @@ namespace SeleniumTraining.DriverHelper
         /// <returns></returns>
         internal static bool AreElementsPresent(IWebDriver driver, By locator)
         {
-            return driver.FindElements(locator).Count > 0;
+            driver.Manage().Timeouts().ImplicitWait = new TimeSpan(0, 0, 0);
+            var count = driver.FindElements(locator).Count;
+            driver.Manage().Timeouts().ImplicitWait = new TimeSpan(0, 0, DriverFactory.TimeOutSeconds);
+            return count > 0;
         }
     }
 }

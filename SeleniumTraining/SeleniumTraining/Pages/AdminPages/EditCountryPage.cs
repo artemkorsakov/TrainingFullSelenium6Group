@@ -1,5 +1,8 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.Collections.Generic;
+using NUnit.Framework;
 using OpenQA.Selenium;
+using SeleniumTraining.DriverHelper;
 
 namespace SeleniumTraining.Pages.AdminPages
 {
@@ -29,6 +32,25 @@ namespace SeleniumTraining.Pages.AdminPages
                 }
 
                 previousName = currentName;
+            }
+        }
+
+        /// <summary>
+        /// Проверяем, что все ссылки с иконкой в виде квадратика со стрелкой ведут к открытию нового окна
+        /// </summary>
+        internal void AssertExternalLink()
+        {
+            var externalLinks = Driver.FindElements(By.CssSelector(".fa-external-link"));
+            foreach (var externalLink in externalLinks)
+            {
+                string mainWindow = Driver.CurrentWindowHandle;
+                ICollection<string> oldWindows = Driver.WindowHandles;
+                externalLink.Click();
+                string newWindow = WindowsHelper.GetWindowHandle(Driver, oldWindows);
+                Driver.SwitchTo().Window(newWindow);
+                Console.WriteLine($"Открылось новое окно с заголовком: \"{Driver.Title}\"");
+                Driver.Close();
+                Driver.SwitchTo().Window(mainWindow);
             }
         }
 

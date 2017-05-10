@@ -44,9 +44,7 @@ namespace SeleniumTraining
             // Удаляем уточек
             mainPage.OpenCart();
             ShoppingCartPage shoppingCartPage = new ShoppingCartPage(_driver);
-            shoppingCartPage.DeleteProduct(yellowDuck);
-            shoppingCartPage.DeleteProduct(greenDuck);
-            shoppingCartPage.DeleteProduct(purpleDuck);
+            shoppingCartPage.DeleteAllProduct();
         }
 
         [TearDown]

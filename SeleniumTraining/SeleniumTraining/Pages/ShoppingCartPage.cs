@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumTraining.DriverHelper;
@@ -16,6 +17,25 @@ namespace SeleniumTraining.Pages
         internal ShoppingCartPage(IWebDriver driver)
         {
             Driver = driver;
+        }
+
+        /// <summary>
+        /// Удаление всех продуктов из корзины
+        /// </summary>
+        internal void DeleteAllProduct()
+        {
+            // Считываем все идентификаторы продуктов для удаления
+            var ids =
+                Driver.FindElements(By.CssSelector("form[name=checkout_form] button[title=Remove]"))
+                    .Select(el => el.GetAttribute("value")).ToArray();
+            foreach (var id in ids)
+            {
+                var removeButton = Driver.FindElement(By.XPath($"//form[@name='checkout_form']//button[@title='Remove'][@value='{id}']"));
+                removeButton.Click();
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(DriverFactory.TimeOutSeconds));
+                wait.Until(ExpectedConditions.StalenessOf(removeButton));
+                WaitLoad();
+            }
         }
 
         /// <summary>

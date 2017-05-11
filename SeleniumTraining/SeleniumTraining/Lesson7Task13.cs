@@ -24,6 +24,7 @@ namespace SeleniumTraining
         [Test]
         public void CheckBasket()
         {
+            const int count = 10;
             var sizes = new string[] { "Small", "Medium", "Large" };
 
             MainPage mainPage = new MainPage(_driver);
@@ -31,10 +32,10 @@ namespace SeleniumTraining
             mainPage.ClickCategory("Rubber Ducks");
 
             // Покупаем уточек
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < count; i++)
             {
                 mainPage.ClickRandomProduct();
-                mainPage.AddToCart(new Random().Next(5), sizes[new Random().Next(sizes.Length)]);
+                mainPage.AddToCart(new Random().Next(1, count), sizes[new Random().Next(sizes.Length)]);
                 mainPage.CloseProductPopup();
             }
 

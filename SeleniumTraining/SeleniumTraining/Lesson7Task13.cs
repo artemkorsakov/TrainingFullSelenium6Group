@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using SeleniumTraining.DriverHelper;
 using SeleniumTraining.Entities;
@@ -23,23 +24,19 @@ namespace SeleniumTraining
         [Test]
         public void CheckBasket()
         {
+            var sizes = new string[] { "Small", "Medium", "Large" };
+
             MainPage mainPage = new MainPage(_driver);
             mainPage.Open();
             mainPage.ClickCategory("Rubber Ducks");
 
             // Покупаем уточек
-            SimpleProduct purpleDuck = new SimpleProduct("Purple Duck", "ACME Corp.");
-            SimpleProduct greenDuck = new SimpleProduct("Green Duck", "ACME Corp.");
-            SimpleProduct yellowDuck = new SimpleProduct("Yellow Duck", "ACME Corp.");
-            mainPage.ClickProduct(purpleDuck);
-            mainPage.AddToCart(3);
-            mainPage.CloseProductPopup();
-            mainPage.ClickProduct(greenDuck);
-            mainPage.AddToCart(1);
-            mainPage.CloseProductPopup();
-            mainPage.ClickProduct(yellowDuck);
-            mainPage.AddToCart(2, "Large");
-            mainPage.CloseProductPopup();
+            for (int i = 0; i < 10; i++)
+            {
+                mainPage.ClickRandomProduct();
+                mainPage.AddToCart(new Random().Next(5), sizes[new Random().Next(sizes.Length)]);
+                mainPage.CloseProductPopup();
+            }
 
             // Удаляем уточек
             mainPage.OpenCart();

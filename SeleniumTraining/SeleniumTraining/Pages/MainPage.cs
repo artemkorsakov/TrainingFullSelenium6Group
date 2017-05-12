@@ -118,19 +118,11 @@ namespace SeleniumTraining.Pages
         {
             SelectSize(size);
             SelectQuantity(quantity);
-
-            var currentQuantityText = Driver.FindElement(By.CssSelector(".quantity")).Text;
-            int currentQuantity;
-            if (!int.TryParse(currentQuantityText, out currentQuantity))
-            {
-                currentQuantity = 0;
-            }
-
             Driver.FindElement(By.CssSelector("[name=buy_now_form] [name=add_cart_product]")).Click();
 
-            int futureQuantity = currentQuantity + quantity;
             WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(DriverFactory.TimeOutSeconds));
-            wait.Until(ExpectedConditions.ElementExists(By.XPath($"//span[@class='quantity'][.='{futureQuantity}']")));
+            wait.Until(ExpectedConditions.ElementExists(By.CssSelector("#animated-cart-item")));
+            wait.Until(ExpectedConditions.StalenessOf(Driver.FindElement(By.CssSelector("#animated-cart-item"))));
         }
 
         /// <summary>

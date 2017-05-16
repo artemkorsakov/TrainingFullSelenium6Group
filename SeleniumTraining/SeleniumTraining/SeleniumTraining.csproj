@@ -68,11 +68,14 @@
     <Compile Include="DriverHelper\BrowserKind.cs" />
     <Compile Include="DriverHelper\DriverFactory.cs" />
     <Compile Include="DriverHelper\Elements.cs" />
+    <Compile Include="DriverHelper\LogHelper.cs" />
+    <Compile Include="DriverHelper\ScreenShotHelper.cs" />
     <Compile Include="DriverHelper\WindowsHelper.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\SimpleProduct.cs" />
     <Compile Include="Entities\Rgba.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Lesson10Task17.cs" />
     <Compile Include="Lesson2Task1.cs" />
     <Compile Include="Lesson2Task3.cs" />
     <Compile Include="Lesson3Tast4.cs" />
@@ -90,6 +93,7 @@
     <Compile Include="Pages\AdminPages\AdminPage.cs" />
     <Compile Include="Pages\AdminPages\CatalogPage.cs" />
     <Compile Include="Pages\AdminPages\CountriesPage.cs" />
+    <Compile Include="Pages\AdminPages\EditProductPage.cs" />
     <Compile Include="Pages\CreateAccountPage.cs" />
     <Compile Include="Pages\AdminPages\EditCountryPage.cs" />
     <Compile Include="Pages\AdminPages\EditGeoZonePage.cs" />

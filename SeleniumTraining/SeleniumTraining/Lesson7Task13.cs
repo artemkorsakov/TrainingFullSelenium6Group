@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using SeleniumTraining.DriverHelper;
-using SeleniumTraining.Entities;
 using SeleniumTraining.Pages;
 
 namespace SeleniumTraining
